@@ -29,13 +29,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public UserDetails loadUserByUsername(String nickname) throws UsernameNotFoundException {
-        Account account = userRepository.findByNickName(nickname);
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        Account account = userRepository.findByEmail(email);
         if(account == null){
-            log.error("{}을 가진 유저가 존재하지 않습니다",nickname);
+            log.error("{}을 가진 유저가 존재하지 않습니다",email);
             throw new UsernameNotFoundException("유저를 찾을 수 없습니다.");
         } else{
-            log.info("{}을 가진 유저가 존재",nickname);
+            log.info("{}을 가진 유저가 존재",email);
         }
 
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     @Transactional
     public Account saveAccount(Account account) {
-        log.info("새로운 아이디 {} 저장",account.getNickName());
+        log.info("새로운 아이디 {} 저장",account.getEmail());
         account.setPassword(passwordEncoder.encode(account.getPassword()));
         return userRepository.save(account);
     }
@@ -62,8 +62,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     @Transactional
-    public void addRoleToAccount(String nickname, String roleName) {
-        Account account = userRepository.findByNickName(nickname);
+    public void addRoleToAccount(String email, String roleName) {
+        Account account = userRepository.findByEmail(email);
         Role role = roleRepository.findByName(roleName);
 
         account.getRoles().add(role);

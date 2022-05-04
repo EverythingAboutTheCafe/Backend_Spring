@@ -75,19 +75,19 @@ public class UserController {
                 Algorithm algorithm = Algorithm.HMAC256("HelloIsEverythingofCafeSecret".getBytes());
                 JWTVerifier verifier = JWT.require(algorithm).build();
                 DecodedJWT decodedJWT = verifier.verify(refresh_token);
-                String username = decodedJWT.getSubject();
-                Account user = userService.getAccount(username);
+                String email = decodedJWT.getSubject();
+                Account user = userService.getAccount(email);
                 //username이 고유이고 이걸로 식별한다.
 
                 //username을 나는 email로 바꿨음 email이 unique 한 거임
 
 
-                String access_token = JWT.create().withSubject(user.getNickName()) // 10분
+                String access_token = JWT.create().withSubject(user.getEmail()) // 10분
                         .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
                         .withIssuer(request.getRequestURL().toString())
                         .withClaim("roles",user.getRoles().stream().map(Role::getName).collect(Collectors.toList()))
                         .sign(algorithm);
-                log.info("usercontorller 여기는 되냐22222?");
+
 
                 Map<String,String> tokens = new HashMap<>();
                 tokens.put("access_token",access_token);

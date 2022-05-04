@@ -10,7 +10,7 @@ public interface UserService {
     Account saveAccount(Account account);
     Role saveRole(Role role);
 
-    void addRoleToAccount(String nickname,String roleName);
+    void addRoleToAccount(String email,String roleName);
 
     Account getAccount(String email);
 

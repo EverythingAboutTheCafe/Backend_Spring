@@ -38,10 +38,10 @@ public class CamoApplication {
 			userService.saveAccount(new Account(null,"third","1234","email3@naver.com",new ArrayList<>()));
 			userService.saveAccount(new Account(null,"fourth","1234","email4@naver.com",new ArrayList<>()));
 
-			userService.addRoleToAccount("first","ROLE_USER");
-			userService.addRoleToAccount("second","ROLE_MANAGER");
-			userService.addRoleToAccount("third","ROLE_ADMIN");
-			userService.addRoleToAccount("fourth","ROLE_SUPER_ADMIN");
+			userService.addRoleToAccount("email1@naver.com","ROLE_USER");
+			userService.addRoleToAccount("email2@naver.com","ROLE_MANAGER");
+			userService.addRoleToAccount("email3@naver.com","ROLE_ADMIN");
+			userService.addRoleToAccount("email4@naver.com","ROLE_SUPER_ADMIN");
 		};
 	}
 
